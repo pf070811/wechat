@@ -1,0 +1,22 @@
+{
+    "name": "penghai/wechat",
+    "description": "微信接口",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "penghai",
+            "email": "wph45@163.com"
+        }
+    ],
+    "minimum-stability":"stable",
+    "require": {
+        "php": ">=7.0",
+        "guzzlehttp/guzzle": "^6.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "pfWechat\\": "src/"
+        }
+    }
+}
