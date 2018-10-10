@@ -6,7 +6,7 @@
  * Time: 下午2:45
  */
 
-namespace pfWechat\Core\Mp;
+namespace pfWechat\Code\Mp;
 
 use pfWechat\Code\Support\BaseRequest;
 /**
@@ -21,7 +21,7 @@ class QrCode extends BaseRequest{
     /**
      * 临时二维码
      */
-    public function createSceneQr($sceneId, $expireSeconds=1800)
+    public function createSceneQr($sceneId, $expireSeconds=2592000)
     {
         $params = [
             'expire_seconds' => $expireSeconds,

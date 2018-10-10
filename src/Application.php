@@ -19,9 +19,10 @@ class Application
      * 配置文件
      */
     protected $config = [
-        'app_id' => '',
-        'aes_key' => '',
-        'token' => '',
+        'app_id'   => '',
+        'secret'   => '',
+        'token'    => '',
+        'aes_key'  => '',
         'access_token' => '',
     ];
 
@@ -33,6 +34,7 @@ class Application
         'User' => Code\Mp\User::class,
         'Media' => Code\Mp\Media::class,
         'Message' => Code\Mp\Message::class,
+        'QrCode' => Code\Mp\QrCode::class,
     ];
 
     /**
@@ -42,35 +44,19 @@ class Application
      */
     public function __construct(array $config)
     {
+        $this->setConfig($config);
+    }
+
+    /**
+     * Application Config
+     *
+     * @return array
+     */
+    public function setConfig(array $config)
+    {
         $this->config = array_merge($this->config, $config);
-        if (empty($this->config['access_token']))
-        {
-            $tokenInfo = $this->getTokenInfo();
-            $token = $tokenInfo['access_token']??'';
-            $this->setAccessToken($token);
-        }
     }
-    /**
-     * Application setToken
-     *
-     * @return array
-     */
-    public function setAccessToken($token)
-    {
-        if (!empty($token))
-        {
-            $this->config['access_token'] = $token;
-        }
-    }
-    /**
-     * Application getTokenInfo
-     *
-     * @return array
-     */
-    public function getTokenInfo()
-    {
-        return $this->token->get();
-    }
+
     /**
      * Application Config
      *
@@ -103,14 +89,15 @@ class Application
         }
     }
 
+    /**
+     * http Client
+     */
     public function httpRequest()
     {
         if (isset($this->instanceMap['httpRequest']) && is_array($this->instanceMap['httpRequest']))
         {
             return $this->instanceMap['httpRequest'];
         }
-        return $this->instanceMap['httpRequest'] = new Client([
-            'base_uri' => $this->config['oapi_host'],
-        ]);
+        return $this->instanceMap['httpRequest'] = new Client();
     }
 }
